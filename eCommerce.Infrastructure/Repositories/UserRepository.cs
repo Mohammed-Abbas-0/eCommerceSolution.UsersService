@@ -1,15 +1,29 @@
-﻿using eCommerce.Core.DTO;
+﻿using Dapper;
+using eCommerce.Core.DTO;
 using eCommerce.Core.Entities;
 using eCommerce.Core.RepositoryContracts;
+using eCommerce.Infrastructure.Context;
 
 namespace eCommerce.Infrastructure.Repositories;
 
-public class UserRepository : IUserRepository
+internal class UserRepository : IUserRepository
 {
+    private readonly DapperDbContext _dbContext;
+    public UserRepository(DapperDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
     public async Task<ApplicationUser?> AddUser(ApplicationUser user)
     {
         user.UserId = Guid.NewGuid();
-        return user;
+        // Sql query to insert user into database can be added here using _dapperDb
+        string query = "INSERT INTO public.\"Users\"(\"UserId\",\"Email\",\"PersonName\",\"Gender\",\"Password\") Values (@UserId,@Email,@PersonName,@Gender,@Password)";
+        int rowCountAffected = await _dbContext.DbConnection.ExecuteAsync(query, user);
+        if (rowCountAffected > 0)
+        {
+            return user;
+        }
+        return null;
     }
 
     public async Task<ApplicationUser?> GetUserByEmailAndPassword(string? email, string? password)
@@ -20,7 +34,7 @@ public class UserRepository : IUserRepository
             Email = email,
             Password = password,
             PersonName = "John Doe",
-            Gender =  GenderOptions.Male.ToString()
+            Gender = GenderOptions.Male.ToString()
         };
     }
 }

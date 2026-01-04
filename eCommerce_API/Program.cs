@@ -1,5 +1,4 @@
 using eCommerce.Core;
-using eCommerce.Core.Mappers;
 using eCommerce.Infrastructure;
 using eCommerce_API.Middlewares;
 using System.Text.Json.Serialization;

@@ -40,7 +40,8 @@ public class UserService : IUserService
         {
             Email = request.Email,
             Password = request.Password,
-            PersonName = request.PersonName
+            PersonName = request.PersonName,
+            Gender = request.Gender.ToString()
         });
 
         return new AuthenticationResponse
@@ -48,7 +49,7 @@ public class UserService : IUserService
             UserId: applicationUser.UserId,
             Email: applicationUser.Email,
             PersonName: applicationUser.PersonName,
-            Token: "",
+            Token: "token",
             Gender: applicationUser.Gender,
             Success: true
         );

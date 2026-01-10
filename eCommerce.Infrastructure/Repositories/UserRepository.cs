@@ -17,7 +17,12 @@ internal class UserRepository : IUserRepository
     {
         user.UserId = Guid.NewGuid();
         // Sql query to insert user into database can be added here using _dapperDb
-        string query = "INSERT INTO public.\"Users\"(\"UserId\",\"Email\",\"PersonName\",\"Gender\",\"Password\") Values (@UserId,@Email,@PersonName,@Gender,@Password)";
+        string query = """
+                INSERT INTO public.users
+                (user_id, email, person_name, gender, password)
+                VALUES
+                (@UserId, @Email, @PersonName, @Gender, @Password)
+                """;
         int rowCountAffected = await _dbContext.DbConnection.ExecuteAsync(query, user);
         if (rowCountAffected > 0)
         {
@@ -28,13 +33,24 @@ internal class UserRepository : IUserRepository
 
     public async Task<ApplicationUser?> GetUserByEmailAndPassword(string? email, string? password)
     {
-        return new ApplicationUser
-        {
-            UserId = Guid.NewGuid(),
-            Email = email,
-            Password = password,
-            PersonName = "John Doe",
-            Gender = GenderOptions.Male.ToString()
-        };
+        string query = """
+        SELECT
+            user_id AS "UserId",
+            email,
+            person_name AS "PersonName",
+            gender,
+            password
+        FROM public.users
+        WHERE email = @Email
+          AND password = @Password
+        LIMIT 1
+    """;
+
+        var user = await _dbContext.DbConnection
+            .QueryFirstOrDefaultAsync<ApplicationUser>(
+                query,
+                new { Email = email, Password = password }
+            );
+        return user;
     }
 }

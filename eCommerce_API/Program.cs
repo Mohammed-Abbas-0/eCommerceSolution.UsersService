@@ -10,9 +10,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add Infrastructure Layer
 builder.Services.AddInfrastructure(builder.Configuration);
+
 // Add Core Layer
 builder.Services.AddCore();
 
+// Add CORS Support
+builder.Services.AddCors(idx => { 
+    idx.AddDefaultPolicy(policy => 
+    {
+        policy.AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowAnyOrigin();
+    });
+});
+
+// Api Explorer
+builder.Services.AddEndpointsApiExplorer();
+
+// Add Swagger
+builder.Services.AddSwaggerGen();
 
 // Add Controllers with JSON options to handle enum as string in JSON
 // Example:  "Gender":"Male" and receive it in GenderOptions enum
@@ -39,6 +55,17 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandlingMiddleware();
 
 app.UseHttpsRedirection();
+
+app.UseSwagger(); // Enable middleware to serve generated Swagger as a JSON endpoint.
+app.UseSwaggerUI(); // Interface to explore the API endpoints 
+
+// CORS
+app.UseCors(policy =>
+{
+    policy.AllowAnyHeader()
+          .AllowAnyMethod()
+          .AllowAnyOrigin();
+});
 
 // Auth
 app.UseAuthentication();

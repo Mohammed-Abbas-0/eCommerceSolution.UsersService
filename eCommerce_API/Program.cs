@@ -1,6 +1,7 @@
 using eCommerce.Core;
 using eCommerce.Infrastructure;
 using eCommerce_API.Middlewares;
+using FluentValidation.AspNetCore;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,8 @@ builder.Services.AddControllers().AddJsonOptions(
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+// Fluent Validation
+builder.Services.AddFluentValidationAutoValidation();
 
 // Build the app
 var app = builder.Build();

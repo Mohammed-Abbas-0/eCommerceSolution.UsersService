@@ -19,10 +19,6 @@ namespace eCommerce_API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
-            if (loginRequest is null)
-            {
-                return BadRequest("Invalid login request.");
-            }
             AuthenticationResponse? authenticationResponse = await _userService.Login(loginRequest);
             if (authenticationResponse is null || authenticationResponse.Success is false)
             {

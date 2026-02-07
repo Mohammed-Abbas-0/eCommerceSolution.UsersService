@@ -34,18 +34,17 @@ internal class UserRepository : IUserRepository
     public async Task<ApplicationUser?> GetUserByEmailAndPassword(string? email, string? password)
     {
         string query = """
-        SELECT
-            user_id AS "UserId",
-            email,
-            person_name AS "PersonName",
-            gender,
-            password
-        FROM public.users
-        WHERE email = @Email
-          AND password = @Password
-        LIMIT 1
-    """;
-
+    SELECT 
+        userid AS "UserId", 
+        email AS "Email", 
+        personname AS "PersonName", 
+        gender AS "Gender", 
+        password AS "Password" 
+    FROM users 
+    WHERE email = @Email 
+      AND password = @Password 
+    LIMIT 1
+""";
         var user = await _dbContext.DbConnection
             .QueryFirstOrDefaultAsync<ApplicationUser>(
                 query,

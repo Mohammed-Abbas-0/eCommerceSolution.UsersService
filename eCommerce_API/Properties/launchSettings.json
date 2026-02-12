@@ -3,7 +3,12 @@
     "http": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "POSTGRES_HOST": "postgres",
+        "POSTGRES_PASSWORD": "admin",
+        "POSTGRES_DATABASE": "eCommerceUsers",
+        "POSTGRES_PORT": "5432",
+        "POSTGRES_USER": "postgres"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5271"

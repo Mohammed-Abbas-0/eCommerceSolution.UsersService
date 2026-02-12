@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using eCommerce.Core.DTO;
 using eCommerce.Core.Entities;
 using eCommerce.Core.RepositoryContracts;
 using eCommerce.Infrastructure.Context;
@@ -49,6 +48,28 @@ internal class UserRepository : IUserRepository
             .QueryFirstOrDefaultAsync<ApplicationUser>(
                 query,
                 new { Email = email, Password = password }
+            );
+        return user;
+    }
+
+    public async Task<ApplicationUser?> GetUserByUserId(string? userId)
+    {
+        string query = """
+    SELECT 
+        userid AS "UserId", 
+        email AS "Email", 
+        personname AS "PersonName", 
+        gender AS "Gender", 
+        password AS "Password" 
+    FROM users 
+    WHERE userId = @UserId 
+      AND password = @Password 
+    LIMIT 1
+""";
+        var user = await _dbContext.DbConnection
+            .QueryFirstOrDefaultAsync<ApplicationUser>(
+                query,
+                new { UserId = userId }
             );
         return user;
     }

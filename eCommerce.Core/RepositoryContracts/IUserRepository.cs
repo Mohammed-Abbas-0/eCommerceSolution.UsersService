@@ -19,4 +19,10 @@ public interface IUserRepository
     /// <returns></returns>
     Task<ApplicationUser?> GetUserByEmailAndPassword(string? email, string? password);
 
+    /// <summary>
+    /// Defines a method to retrieve a user by their unique user ID.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    Task<ApplicationUser?> GetUserByUserId(string? userId);
 }

@@ -30,4 +30,7 @@ COPY --from=publish /app/publish .
 COPY eCommerce_API/appsettings.json .
 ENV POSTGRES_HOST=postgres
 ENV POSTGRES_PASSWORD=admin
+ENV POSTGRES_DATABASE=eCommerceUsers
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PORT=5432
 ENTRYPOINT ["dotnet", "eCommerce_API.dll"]

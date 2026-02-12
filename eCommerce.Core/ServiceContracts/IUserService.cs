@@ -18,5 +18,12 @@ public interface IUserService
     /// <returns></returns>
     Task<AuthenticationResponse?> RegisterUser(RegisterRequest request);
 
+    /// <summary>
+    /// Defines a method to retrieve a user by their unique user ID.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    Task<UserDTO> GetUserByUserId(string? userId);
+
 
 }

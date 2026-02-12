@@ -24,16 +24,20 @@ public static class DependencyInjection
 
             if (string.IsNullOrEmpty(template))
             {
-                // هذا السطر سيمنع الـ NullReference ويخبرك بالسبب الحقيقي في الـ Logs
                 throw new Exception("Connection string 'PostgresConnectionString' is missing from appsettings.json!");
             }
 
-            // تأكد من جلب المتغيرات مع توفير قيم افتراضية لمنع الـ Null
             string host = Environment.GetEnvironmentVariable("POSTGRES_HOST") ?? "postgres";
             string pwd = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD") ?? "admin";
+            string db = Environment.GetEnvironmentVariable("POSTGRES_DATABASE") ?? "eCommerceUsers";
+            string user = Environment.GetEnvironmentVariable("POSTGRES_USER") ?? "postgres";
+            string port = Environment.GetEnvironmentVariable("POSTGRES_PORT") ?? "5432";
 
             string connectionString = template
                 .Replace("$POSTGRES_HOST", host)
+                .Replace("POSTGRES_DATABASE", db)
+                .Replace("POSTGRES_PORT", port)
+                .Replace("POSTGRES_USER", user)
                 .Replace("$POSTGRES_PASSWORD", pwd);
 
             return new NpgsqlConnection(connectionString);

@@ -16,6 +16,16 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
+    public async Task<UserDTO> GetUserByUserId(string? userId)
+    {
+        var user = await _userRepository.GetUserByUserId(userId);
+        if (user is null)
+            throw new Exception("User not found");
+
+        return _mapper.Map<UserDTO>(user);
+
+    }
+
     public async Task<AuthenticationResponse?> Login(LoginRequest request)
     {
         ApplicationUser? response = await _userRepository.GetUserByEmailAndPassword(request.Email, request.Password);

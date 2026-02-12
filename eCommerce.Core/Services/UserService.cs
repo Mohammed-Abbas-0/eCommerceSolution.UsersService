@@ -1,4 +1,5 @@
-﻿using eCommerce.Core.DTO;
+﻿using AutoMapper;
+using eCommerce.Core.DTO;
 using eCommerce.Core.Entities;
 using eCommerce.Core.RepositoryContracts;
 using eCommerce.Core.ServiceContracts;
@@ -8,10 +9,20 @@ namespace eCommerce.Core.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository,IMapper mapper)
     {
         _userRepository = userRepository;
+        _mapper = mapper;
+    }
+
+    public async Task<UserDTO> GetUserByUserId(string? userId)
+    {
+        var user = await _userRepository.GetUserByUserId(userId);
+        if (user is null)
+            throw new Exception("User not found"); 
+        return _mapper.Map<UserDTO>(user);
     }
 
     public async Task<AuthenticationResponse?> Login(LoginRequest request)

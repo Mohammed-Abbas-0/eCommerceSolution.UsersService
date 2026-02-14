@@ -1,5 +1,4 @@
 ﻿using eCommerce.Core.DTO;
-using eCommerce.Core.RepositoryContracts;
 using eCommerce.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,5 +46,11 @@ namespace eCommerce_API.Controllers
             return Ok(authenticationResponse);
         }
 
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            // Implement logout logic if needed (e.g., invalidate token, clear cookies, etc.)
+            return Ok("Logged out successfully.");
+        }
     }
 }

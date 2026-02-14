@@ -6,7 +6,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "POSTGRES_HOST": "postgres",
         "POSTGRES_PASSWORD": "admin",
-        "POSTGRES_DATABASE": "eCommerceUsers",
+        "POSTGRES_DB": "eCommerceUsers",
         "POSTGRES_PORT": "5432",
         "POSTGRES_USER": "postgres"
       },

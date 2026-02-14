@@ -13,6 +13,8 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["eCommerce_API/eCommerce_API.csproj", "eCommerce_API/"]
+COPY ["eCommerce.Core/eCommerce.Core.csproj", "eCommerce.Core/"]
+COPY ["eCommerce.Infrastructure/eCommerce.Infrastructure.csproj", "eCommerce.Infrastructure/"]
 RUN dotnet restore "./eCommerce_API/eCommerce_API.csproj"
 COPY . .
 WORKDIR "/src/eCommerce_API"
@@ -30,7 +32,7 @@ COPY --from=publish /app/publish .
 COPY eCommerce_API/appsettings.json .
 ENV POSTGRES_HOST=postgres
 ENV POSTGRES_PASSWORD=admin
-ENV POSTGRES_DATABASE=eCommerceUsers
+ENV POSTGRES_DB=eCommerceUsers
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_PORT=5432
 ENTRYPOINT ["dotnet", "eCommerce_API.dll"]

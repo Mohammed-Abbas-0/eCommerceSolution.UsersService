@@ -18,7 +18,7 @@ internal class UserRepository : IUserRepository
         // Sql query to insert user into database can be added here using _dapperDb
         string query = """
                 INSERT INTO public.users
-                (user_id, email, person_name, gender, password)
+                (userid, email, personname, gender, password)
                 VALUES
                 (@UserId, @Email, @PersonName, @Gender, @Password)
                 """;
@@ -56,13 +56,13 @@ internal class UserRepository : IUserRepository
     {
         string query = """
     SELECT 
-        userid AS "UserId", 
+        user_id AS "UserId", 
         email AS "Email", 
-        personname AS "PersonName", 
+        person_name AS "PersonName", 
         gender AS "Gender", 
         password AS "Password" 
     FROM users 
-    WHERE userId = @UserId 
+    WHERE user_id = @UserId 
       AND password = @Password 
     LIMIT 1
 """;

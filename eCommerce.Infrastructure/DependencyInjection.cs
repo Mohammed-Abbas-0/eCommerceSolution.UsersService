@@ -1,6 +1,8 @@
 ﻿using eCommerce.Core.RepositoryContracts;
+using eCommerce.Core.ServiceContracts;
 using eCommerce.Infrastructure.Context;
 using eCommerce.Infrastructure.Repositories;
+using eCommerce.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
@@ -14,7 +16,12 @@ public static class DependencyInjection
     {
         // Register repositories
         // User Repository
+        // Register repositories
+        // User Repository
         services.AddScoped<IUserRepository, UserRepository>();
+        
+        // Register Services
+        services.AddTransient<IUserService, UserService>();
 
         // Register Dapper DbContext
         services.AddScoped<IDbConnection>(sp =>
@@ -28,17 +35,18 @@ public static class DependencyInjection
             }
 
             string host = Environment.GetEnvironmentVariable("POSTGRES_HOST") ?? "postgres";
-            string pwd = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD") ?? "admin";
-            string db = Environment.GetEnvironmentVariable("POSTGRES_DATABASE") ?? "eCommerceUsers";
+            string pwd  = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD") ?? "admin";
+            string db   = Environment.GetEnvironmentVariable("POSTGRES_DB") ?? "eCommerceUsers";
             string user = Environment.GetEnvironmentVariable("POSTGRES_USER") ?? "postgres";
             string port = Environment.GetEnvironmentVariable("POSTGRES_PORT") ?? "5432";
 
-            string connectionString = template
-                .Replace("$POSTGRES_HOST", host)
-                .Replace("POSTGRES_DATABASE", db)
-                .Replace("POSTGRES_PORT", port)
-                .Replace("POSTGRES_USER", user)
-                .Replace("$POSTGRES_PASSWORD", pwd);
+            //string connectionString = template
+            //                        .Replace("$POSTGRES_HOST", host)
+            //                        .Replace("$POSTGRES_PORT", port)
+            //                        .Replace("$POSTGRES_DB", db)
+            //                        .Replace("$POSTGRES_USER", user)
+            //                        .Replace("$POSTGRES_PASSWORD", pwd);
+            string connectionString = $"Host={host};Port={port};Database={db};Username={user};Password={pwd};Include Error Detail=true;";
 
             return new NpgsqlConnection(connectionString);
         });

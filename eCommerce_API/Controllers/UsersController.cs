@@ -13,7 +13,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{userId}")]
-    public async Task<IActionResult> GetUserByUserId(string userId)
+    public async Task<IActionResult> GetUserByUserId(Guid userId)
     {
         try
         {

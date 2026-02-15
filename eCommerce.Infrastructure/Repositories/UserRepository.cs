@@ -52,24 +52,24 @@ internal class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<ApplicationUser?> GetUserByUserId(string? userId)
+    public async Task<ApplicationUser?> GetUserByUserId(Guid? userId)
     {
-        string query = """
-    SELECT 
-        user_id AS "UserId", 
-        email AS "Email", 
-        person_name AS "PersonName", 
-        gender AS "Gender", 
-        password AS "Password" 
-    FROM users 
-    WHERE user_id = @UserId 
-      AND password = @Password 
-    LIMIT 1
-""";
+            string query = """
+        SELECT 
+            userid AS "UserId", 
+            email AS "Email", 
+            personname AS "PersonName", 
+            gender AS "Gender", 
+            password AS "Password" 
+        FROM users 
+        WHERE userid = @UserId 
+        LIMIT 1
+    """;
+
         var user = await _dbContext.DbConnection
             .QueryFirstOrDefaultAsync<ApplicationUser>(
                 query,
-                new { UserId = userId }
+                new { UserId = userId } 
             );
         return user;
     }

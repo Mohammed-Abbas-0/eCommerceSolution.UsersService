@@ -16,7 +16,7 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    public async Task<UserDTO> GetUserByUserId(string? userId)
+    public async Task<UserDTO> GetUserByUserId(Guid? userId)
     {
         var user = await _userRepository.GetUserByUserId(userId);
         if (user is null)

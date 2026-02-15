@@ -23,7 +23,7 @@ public interface IUserService
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    Task<UserDTO> GetUserByUserId(string? userId);
+    Task<UserDTO> GetUserByUserId(Guid? userId);
 
 
 }

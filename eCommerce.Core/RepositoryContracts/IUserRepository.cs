@@ -24,5 +24,5 @@ public interface IUserRepository
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    Task<ApplicationUser?> GetUserByUserId(string? userId);
+    Task<ApplicationUser?> GetUserByUserId(Guid? userId);
 }
